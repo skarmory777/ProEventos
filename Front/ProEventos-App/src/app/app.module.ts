@@ -15,8 +15,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EventosComponent } from './eventos/eventos.component';
 import { PalestrantesComponent } from './palestrantes/palestrantes.component';
+import { TituloComponent } from './shared/titulo/titulo.component';
 import { NavComponent } from './nav/nav.component';
 import { EventoService } from './services/evento.service';
+
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
@@ -26,6 +28,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     EventosComponent,
     PalestrantesComponent,
     NavComponent,
+    TituloComponent,
     DateTimeFormatPipe
   ],
   imports: [
