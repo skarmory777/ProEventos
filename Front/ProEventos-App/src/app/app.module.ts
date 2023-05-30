@@ -24,6 +24,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ContatosComponent } from './components/contatos/contatos.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { EventoDetalheComponent } from './components/eventos/evento-detalhe/evento-detalhe.component';
+import { EventoListaComponent } from './components/eventos/evento-lista/evento-lista.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     DashboardComponent,
     NavComponent,
     TituloComponent,
-    DateTimeFormatPipe
+    DateTimeFormatPipe,
+    EventoDetalheComponent,
+    EventoListaComponent
   ],
   imports: [
     BrowserModule,
