@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! E:\projetos\dotnet\ProEventosEdson\front\ProEventos-App\src\polyfills.ts */"hN/g");
+module.exports = __webpack_require__(/*! D:\Edson\projetos\.NET\ProEventos\Front\ProEventos-App\src\polyfills.ts */"hN/g");
 
 
 /***/ }),

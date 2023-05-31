@@ -44,7 +44,7 @@
       </tr>
     </thead>
     <tbody *ngIf="eventos && eventos.length">
-      <tr *ngFor="let evento of eventosFiltrados" style="cursor: pointer;">
+      <tr *ngFor="let evento of eventosFiltrados" style="cursor: pointer;" (click)="detalheEvento(evento.id)">
         <td class="d-none d-md-table-cell">
           <img [collapse]="!exibirImagem"
           [isAnimated]="true"
