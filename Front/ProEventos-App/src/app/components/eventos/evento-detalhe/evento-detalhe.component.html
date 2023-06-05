@@ -6,7 +6,7 @@
             <div class="form-row">
                 <div class="form-group col-md-12">
                     <label>Tema</label>
-                    <input type="text" class="form-control is-invalid"             
+                    <input type="text" class="form-control is-invalid"
                     [ngClass]="cssValidator(f.tema)"
                     formControlName="tema" placeholder="Insira o Tema">
                     <div *ngIf="f.tema.errors?.required && f.tema.touched" class="invalid-feedback">
@@ -17,7 +17,7 @@
                     </div>
                     <div *ngIf="f.tema.errors?.maxlength" class="invalid-feedback">
                         Tema deve ter no máximo 50 caracteres.
-                    </div>                    
+                    </div>
                 </div>
             </div>
             <div class="form-row">
@@ -31,20 +31,19 @@
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label>Data e Hora</label>
-                    <input type="datetime" class="form-control"
-                    bsDatepicker [bsConfig]="bsConfig"
-                    [ngClass]="cssValidator(f.dataEvento)"
-                    formControlName="dataEvento" placeholder="">
-                    <div *ngIf="f.dataEvento.errors?.required && f.dataEvento.touched" class="invalid-feedback">
-                        o campo Data e Hora é obrigatório!
-                    </div>
+                  <label>Data e Hora</label>
+                  <input type="datetime" class="form-control" [ngClass]="cssValidator(f.dataEvento)"
+                  value="{{evento.dataEvento | DateFormatPipe}}" bsDatepicker [bsConfig]="bsConfig" formControlName="dataEvento"
+                  placeholder="" [(ngModel)]="evento.dataEvento">
+                  <div *ngIf="f.dataEvento.errors?.required && f.dataEvento.touched" class="invalid-feedback">
+                    Data e Hora é obrigatório.
+                  </div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-2">
                     <label>Qtd Pessoas</label>
-                    <input type="text" class="form-control"                    
+                    <input type="text" class="form-control"
                     [ngClass]="cssValidator(f.qtdPessoas)"
                     formControlName="qtdPessoas" placeholder="">
                     <div *ngIf="f.qtdPessoas.errors?.required && f.qtdPessoas.touched" class="invalid-feedback">
@@ -52,7 +51,7 @@
                     </div>
                     <div *ngIf="f.qtdPessoas.errors?.max && f.qtdPessoas.touched" class="invalid-feedback">
                         Qtd Pessoas deve ser menor que 120000.
-                    </div>                    
+                    </div>
                 </div>
                 <div class="form-group col-md-2">
                     <label>Telefone</label>
@@ -65,7 +64,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label>Email</label>
-                    <input type="text" class="form-control"                    
+                    <input type="text" class="form-control"
                     [ngClass]="cssValidator(f.email)"
                     formControlName="email" placeholder="e-mail">
                     <div *ngIf="f.email.errors?.required && f.email.touched" class="invalid-feedback">
@@ -73,7 +72,7 @@
                     </div>
                     <div *ngIf="f.email.errors?.email && f.email.touched" class="invalid-feedback">
                         Deve ser um endereço de e-mail válido
-                    </div>                    
+                    </div>
                 </div>
                 <!-- <div class="form-group col-md-4">
                     <label>Imagem</label>
@@ -91,7 +90,7 @@
                 <button class="btn btn-outline-secondary mr-auto border" (click)="resetForm()">
                     Cancelar Alteração
                 </button>
-                <button class="btn btn-success" [disabled]="!form.valid">
+                <button class="btn btn-success" [disabled]="!form.valid" (click)="salvarAlteracao()">
                     <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
                     Salvar Evento
                 </button>

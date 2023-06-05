@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 export class EventoListaComponent implements OnInit {
   modalRef?: BsModalRef;
   public eventos: Evento[] = [];
+  public eventoId = 0;
   public eventosFiltrados: Evento[] = [];
   public larguraImagem: number = 150;
   public margemImagem: number = 2;
@@ -50,7 +51,7 @@ export class EventoListaComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.getEventos()
+    this.carregarEventos();
 
     this.spinner.show();
 
@@ -58,10 +59,8 @@ export class EventoListaComponent implements OnInit {
     }, 5000);
   }
 
-  /**
-   * getEventos
-   */
-  public getEventos(): void {
+
+  public carregarEventos(): void {
     this.eventoService.getEventos().subscribe({
       next: (eventos: Evento[]) => {
         this.eventos = eventos;
@@ -87,14 +86,35 @@ export class EventoListaComponent implements OnInit {
   //     : 'assets/img/semImagem.jpeg';
   // }
 
-  openModal(template: TemplateRef<any>): void {
+  openModal(event: any, template: TemplateRef<any>, eventoId: number): void {
+    event.stopPropagation();
+    this.eventoId = eventoId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
   confirm(): void {
     this.modalRef?.hide();
-    //this.toastr.success('O Evento foi deletado com sucesso!', 'Informação');
-    this.toastr.warning('O Evento foi deletado com sucesso!', 'Informação');
+    this.spinner.show();
+    this.eventoService.delete(this.eventoId).subscribe(
+      (result: any) => {
+        console.log(result);
+        if (result.message === 'Deletado') {
+          this.toastr.success(
+            'O Evento foi deletado com Sucesso.',
+            'Deletado!'
+          );
+          this.carregarEventos();
+        }
+      },
+      (error: any) => {
+        console.error(error);
+        this.toastr.error(
+          `Erro ao tentar deletar o evento ${this.eventoId}`,
+          'Erro'
+        );
+      }
+    )
+    .add(() => this.spinner.hide());
   }
 
   decline(): void {
@@ -103,5 +123,5 @@ export class EventoListaComponent implements OnInit {
 
   detalheEvento(id: number): void {
     this.router.navigate([`eventos/detalhe/${id}`]);
-  }  
+  }
 }

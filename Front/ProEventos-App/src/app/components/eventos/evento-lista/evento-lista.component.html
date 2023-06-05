@@ -6,11 +6,11 @@
       <div class="input-group mb-2">
         <div class="input-group-prepend">
           <div class="input-group-text">Filtro:</div>
-        </div>        
-        <input 
-          type="text" 
+        </div>
+        <input
+          type="text"
           class="form-control"
-          placeholder="buscar" 
+          placeholder="buscar"
           [(ngModel)]="filtroLista">
         <!-- <button class="btn btn-outline-success">Buscar</button> -->
       </div>
@@ -19,7 +19,7 @@
     <div>
       <a class="d-flex btn btn-outline-primary" routerLink="/eventos/detalhe">
         <i class="fa fa-plus-circle my-1"></i>
-        <b class="ml-1 d-none d-sm-block" >Novo</b>        
+        <b class="ml-1 d-none d-sm-block" >Novo</b>
       </a>
     </div>
   </div>
@@ -62,10 +62,7 @@
         <td class="d-none d-md-table-cell">{{evento.qtdPessoas}}</td>
         <td class="d-none d-md-table-cell">{{evento.lotes[0]?.nome}}</td>
         <td>
-          <!-- <button id="editar" type="button" class="btn btn-warning btn-sm mr-2" tooltip="Editar" title="editar" tooltip="Editar">
-            <i class="fa fa-edit"></i>
-          </button> -->
-          <button id="excluir" type="button" class="btn btn-danger btn-sm mr-2" tooltip="Excluir" title="excluir" tooltip="Excluir" (click)="openModal(template)">
+          <button id="excluir" type="button" class="btn btn-danger btn-sm mr-2" tooltip="Excluir" title="excluir" tooltip="Excluir" (click)="openModal($event, template, evento.id)">
             <i class="fa fa-trash"></i>
           </button>
         </td>
@@ -82,10 +79,10 @@
 </div>
  <!-- {{eventos | json}}  -->
 
-<ng-template #template>
+ <ng-template #template>
   <div class="modal-body text-center">
-    <p>Tem certeza que quer deletar esse evento?</p>
-    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
-    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+    <p>Tem certeza que quer deletar o Evento de Código {{this.eventoId}}?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()">Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()">Não</button>
   </div>
 </ng-template>
