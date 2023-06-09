@@ -22,14 +22,14 @@ export class EventoDetalheComponent implements OnInit {
 
   evento = {} as Evento;
   form!: FormGroup;
-  estadoSalvar = 'post';
+  estadoSalvar = Constants.STATUS_PUT;
 
   get f(): any {
     return this.form.controls;
   }
 
   get modoEditar(): boolean {
-    return this.estadoSalvar === 'put';
+    return this.estadoSalvar === Constants.STATUS_PUT;
   }
 
   get bsConfig(): any {
@@ -119,29 +119,23 @@ public teste(): void {
 
     if (this.form.valid) {
       this.evento =
-      this.estadoSalvar === 'post'
+      this.estadoSalvar === Constants.STATUS_POST
         ? { ...this.form.value }
         : { id: this.evento.id, ...this.form.value };
 
-      var teste;
-      if (this.estadoSalvar === 'post')
-        teste = this.eventoService['post'];
-      else
-        teste = this.eventoService['put'];
-
-      teste(this.evento).subscribe({
-          next: (evento: Evento) => {
-            this.toastr.success('Evento salvo com Sucesso!', 'Sucesso');
-          },
-          error: (error: any) => {
-            console.error(error);
-            this.spinner.hide();
-            this.toastr.error('Error ao salvar evento', 'Erro');
-          },
-          complete: () => {
-            this.spinner.hide();
-          }
-        });
+      this.eventoService[this.estadoSalvar === Constants.STATUS_POST ? Constants.STATUS_POST : Constants.STATUS_PUT](this.evento).subscribe({
+        next: (evento: Evento) => {
+          this.toastr.success('Evento salvo com Sucesso!', 'Sucesso');
+        },
+        error: (error: any) => {
+          console.error(error);
+          this.spinner.hide();
+          this.toastr.error('Error ao salvar evento', 'Erro');
+        },
+        complete: () => {
+          this.spinner.hide();
+        }
+      });
     }
   }
 }
