@@ -22,7 +22,7 @@ export class EventoDetalheComponent implements OnInit {
 
   evento = {} as Evento;
   form!: FormGroup;
-  estadoSalvar = Constants.STATUS_PUT;
+  estadoSalvar = Constants.STATUS_POST;
 
   get f(): any {
     return this.form.controls;
@@ -62,7 +62,7 @@ export class EventoDetalheComponent implements OnInit {
 
     if (eventoIdParam !== null) {
 
-      this.estadoSalvar = 'put';
+      this.estadoSalvar = Constants.STATUS_PUT;
       this.spinner.show();
 
       this.eventoService.getEventoById(+eventoIdParam).subscribe({
