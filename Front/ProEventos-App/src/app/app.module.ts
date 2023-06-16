@@ -21,6 +21,7 @@ import { PalestrantesComponent } from './components/palestrantes/palestrantes.co
 import { TituloComponent } from './shared/titulo/titulo.component';
 import { NavComponent } from './shared/nav/nav.component';
 import { EventoService } from './services/evento.service';
+import { LoteService } from './services/lote.service';
 
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -73,7 +74,9 @@ defineLocale('pt-br', ptBrLocale);
     BsDatepickerModule.forRoot()
     
   ],
-  providers: [EventoService],
+  providers: [
+    EventoService, 
+    LoteService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

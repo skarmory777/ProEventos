@@ -7,6 +7,7 @@ import { AbstractControl,
   Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Evento } from '@app/models/Evento';
+import { Lote } from '@app/models/Lote';
 import { EventoService } from '@app/services/evento.service';
 import { Constants } from '@app/util/constants';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
@@ -31,6 +32,10 @@ export class EventoDetalheComponent implements OnInit {
   get modoEditar(): boolean {
     return this.estadoSalvar === Constants.STATUS_PUT;
   }
+
+  get lotes(): FormArray {
+    return this.form.get('lotes') as FormArray;
+  }  
 
   get bsConfig(): any {
     return {
@@ -105,14 +110,28 @@ export class EventoDetalheComponent implements OnInit {
     this.form.reset();
   }
 
-  public cssValidator(campoForm: FormControl | AbstractControl): any {
-    return { 'is-invalid': campoForm.errors && campoForm.touched };
+  public cssValidator(campoForm: FormControl | AbstractControl | null): any {
+    return { 'is-invalid': campoForm?.errors && campoForm?.touched };
   }
 
-public teste(): void {
+  adicionarLote(): void {
+    this.lotes.push(this.criarLote({ id: 0 } as Lote));
+  }
 
+  criarLote(lote: Lote): FormGroup {
+    return this.fb.group({
+      id: [lote.id],
+      nome: [lote.nome, Validators.required],
+      quantidade: [lote.quantidade, Validators.required],
+      preco: [lote.preco, Validators.required],
+      dataInicio: [lote.dataInicio],
+      dataFim: [lote.dataFim],
+    });
+  }
 
-}
+  public mudarValorData(value: Date, indice: number, campo: string): void {
+    this.lotes.value[indice][campo] = value;
+  }
 
   public salvarAlteracao(): void {
     this.spinner.show();

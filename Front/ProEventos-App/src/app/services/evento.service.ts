@@ -9,7 +9,6 @@ import { environment } from '@environments/environment';
 // import { PaginatedResult } from '@app/models/Pagination';
 
 @Injectable(
-// { providedIn: 'root'}
 )
 export class EventoService {
 
