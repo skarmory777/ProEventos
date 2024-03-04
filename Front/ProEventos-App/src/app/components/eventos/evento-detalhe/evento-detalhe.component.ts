@@ -15,6 +15,7 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-evento-detalhe',
@@ -28,6 +29,8 @@ export class EventoDetalheComponent implements OnInit {
   form!: FormGroup;
   estadoSalvar = Constants.STATUS_POST;
   loteAtual = {id: 0, nome: '', indice: 0};
+  imagemURL = 'assets/img/upload.png';
+  file!: File;  
 
   get f(): any {
     return this.form.controls;
@@ -44,7 +47,7 @@ export class EventoDetalheComponent implements OnInit {
   get bsConfig(): any {
     return {
       adaptivePosition: true,
-      dateInputFormat: Constants.DATE_TIME_FMT,
+      dateInputFormat: 'DD/MM/YYYY',
       containerClass: 'theme-default',
       showWeekNumbers: false,
     };
@@ -82,9 +85,10 @@ export class EventoDetalheComponent implements OnInit {
         next: (evento: Evento) => {
           this.evento = {... evento};
           this.form.patchValue(this.evento);
-          this.evento.lotes.forEach(lote => {
-            this.lotes.push(this.criarLote(lote));
-          })
+          if (this.evento.imagemURL !== '') {
+            this.imagemURL = environment.apiURL + 'resources/images/' + this.evento.imagemURL;
+          }
+          this.carregarLotes();
         },
         error: (error: any) => {
           this.toastr.error('Erro ao tentar carregar Evento.', 'Erro!');
@@ -242,4 +246,28 @@ export class EventoDetalheComponent implements OnInit {
     this.modalRef.hide();
   }
 
+  onFileChange(ev: any): void {
+    const reader = new FileReader();
+
+    reader.onload = (event: any) => this.imagemURL = event.target.result;
+
+    this.file = ev.target.files[0];
+    reader.readAsDataURL(this.file);
+
+    this.uploadImagem();
+  }
+
+  uploadImagem(): void {
+    this.spinner.show();
+    this.eventoService.postUpload(this.eventoId, this.file).subscribe(
+      () => {
+        this.carregarEvento();
+        this.toastr.success('Imagem atualizada com Sucesso', 'Sucesso!');
+      },
+      (error: any) => {
+        this.toastr.error('Erro ao fazer upload de imagem', 'Erro!');
+        console.log(error);
+      }
+    ).add(() => this.spinner.hide());
+  }  
 }

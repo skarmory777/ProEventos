@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { EventoService } from '../../../services/evento.service';
 import { Evento } from '../../../models/Evento';
 import { Router } from '@angular/router';
+import { environment } from '@environments/environment';
 
 
 @Component({
@@ -80,11 +81,11 @@ export class EventoListaComponent implements OnInit {
     this.exibirImagem = !this.exibirImagem;
   }
 
-  // public mostraImagem(imagemURL: string): string {
-  //   return imagemURL !== ''
-  //     ? `${environment.apiURL}resources/images/${imagemURL}`
-  //     : 'assets/img/semImagem.jpeg';
-  // }
+  public mostrarImagem(imagemURL: string): string {
+    return imagemURL !== ''
+      ? `${environment.apiURL}resources/images/${imagemURL}`
+      : 'assets/img/semImagem.jpeg';
+  }
 
   openModal(event: any, template: TemplateRef<any>, eventoId: number): void {
     event.stopPropagation();
