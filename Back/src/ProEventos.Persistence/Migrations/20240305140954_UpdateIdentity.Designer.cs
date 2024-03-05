@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProEventos.Persistence;
 
 namespace ProEventos.Persistence.Migrations
 {
     [DbContext(typeof(ProEventosContext))]
-    partial class ProEventosContextModelSnapshot : ModelSnapshot
+    [Migration("20240305140954_UpdateIdentity")]
+    partial class UpdateIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,7 +126,10 @@ namespace ProEventos.Persistence.Migrations
                     b.Property<string>("Tema")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid?>("UserId1")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("imagemURL")
@@ -132,7 +137,7 @@ namespace ProEventos.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Eventos");
                 });
@@ -302,12 +307,15 @@ namespace ProEventos.Persistence.Migrations
                     b.Property<string>("MiniCurriculo")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid?>("UserId1")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Palestrantes");
                 });
@@ -394,7 +402,7 @@ namespace ProEventos.Persistence.Migrations
                 {
                     b.HasOne("ProEventos.Domain.Identity.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("User");
                 });
@@ -433,7 +441,7 @@ namespace ProEventos.Persistence.Migrations
                 {
                     b.HasOne("ProEventos.Domain.Identity.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("User");
                 });
